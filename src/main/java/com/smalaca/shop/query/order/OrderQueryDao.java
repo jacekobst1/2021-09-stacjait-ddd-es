@@ -1,5 +1,6 @@
 package com.smalaca.shop.query.order;
 
+import com.smalaca.shop.domain.order.OrderId;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
@@ -10,7 +11,7 @@ public class OrderQueryDao {
         return null;
     }
 
-    public OrderDto findBy(UUID orderId) {
+    public OrderDto findBy(OrderId orderId) {
         return null;
     }
 }

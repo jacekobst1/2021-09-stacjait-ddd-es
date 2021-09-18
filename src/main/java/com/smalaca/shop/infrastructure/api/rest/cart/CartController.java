@@ -2,6 +2,8 @@ package com.smalaca.shop.infrastructure.api.rest.cart;
 
 import com.smalaca.shop.application.cart.CartApplicationService;
 import com.smalaca.shop.application.cart.CartConfirmationDto;
+import com.smalaca.shop.domain.cart.CartId;
+import com.smalaca.shop.domain.order.OrderId;
 import com.smalaca.shop.query.cart.CartDto;
 import com.smalaca.shop.query.cart.CartQueryDao;
 import com.smalaca.shop.query.order.OrderDto;
@@ -26,9 +28,9 @@ public class CartController {
 
     @PutMapping("/{productId}")
     public void addProduct(@PathVariable UUID productId) {
-        UUID cartId = getCartIdOfCurrentUser();
+        CartId cartId = getCartIdOfCurrentUser();
 
-        cartApplicationService.add(productId, cartId);
+        cartApplicationService.add(cartId, productId);
     }
 
     @GetMapping
@@ -38,13 +40,13 @@ public class CartController {
 
     @PutMapping
     public OrderDto confirm(@RequestBody CartConfirmationDto cartConfirmationDto) {
-        UUID cartId = getCartIdOfCurrentUser();
-        UUID orderId = cartApplicationService.confirm(cartId, cartConfirmationDto);
+        CartId cartId = getCartIdOfCurrentUser();
+        OrderId orderId = cartApplicationService.confirm(cartId, cartConfirmationDto);
 
         return orderQueryDao.findBy(orderId);
     }
 
-    private UUID getCartIdOfCurrentUser() {
+    private CartId getCartIdOfCurrentUser() {
         return null;
     }
 }
