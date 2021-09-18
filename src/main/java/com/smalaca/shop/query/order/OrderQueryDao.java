@@ -6,7 +6,11 @@ import java.util.UUID;
 
 @Repository
 public class OrderQueryDao {
-    public OrderSummaryDto findBy(UUID orderId) {
+    public OrderSummaryDto findSummaryBy(UUID orderId) {
+        return null;
+    }
+
+    public OrderDto findBy(UUID orderId) {
         return null;
     }
 }

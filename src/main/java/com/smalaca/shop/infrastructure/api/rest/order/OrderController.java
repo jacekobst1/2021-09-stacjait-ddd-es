@@ -27,7 +27,7 @@ public class OrderController {
         UUID orderId = getOrderIdForCurrentUser();
 
         orderApplicationService.accept(orderId, orderCommentsDto);
-        return orderQueryDao.findBy(orderId);
+        return orderQueryDao.findSummaryBy(orderId);
     }
 
     private UUID getOrderIdForCurrentUser() {

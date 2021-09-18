@@ -4,10 +4,7 @@ import com.smalaca.shop.query.product.ProductDetailsDto;
 import com.smalaca.shop.query.product.ProductDto;
 import com.smalaca.shop.query.product.ProductQueryDao;
 import com.smalaca.shop.query.product.SearchCriteria;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,7 +24,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ProductDetailsDto display(UUID productId) {
+    public ProductDetailsDto display(@PathVariable UUID productId) {
         return productQueryDao.findBy(productId);
     }
 }

@@ -1,22 +1,50 @@
 package com.smalaca.shop.infrastructure.api.rest.cart;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.smalaca.shop.application.cart.CartApplicationService;
+import com.smalaca.shop.application.cart.CartConfirmationDto;
+import com.smalaca.shop.query.cart.CartDto;
+import com.smalaca.shop.query.cart.CartQueryDao;
+import com.smalaca.shop.query.order.OrderDto;
+import com.smalaca.shop.query.order.OrderQueryDao;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/cart")
 public class CartController {
-    public void addProduct(UUID productId) {
+    private final CartApplicationService cartApplicationService;
+    private final CartQueryDao cartQueryDao;
+    private final OrderQueryDao orderQueryDao;
 
+    public CartController(
+            CartApplicationService cartApplicationService, CartQueryDao cartQueryDao, OrderQueryDao orderQueryDao) {
+        this.cartApplicationService = cartApplicationService;
+        this.cartQueryDao = cartQueryDao;
+        this.orderQueryDao = orderQueryDao;
     }
 
+    @PutMapping("/{productId}")
+    public void addProduct(@PathVariable UUID productId) {
+        UUID cartId = getCartIdOfCurrentUser();
+
+        cartApplicationService.add(productId, cartId);
+    }
+
+    @GetMapping
     public CartDto choose() {
-        return null;
+        return cartQueryDao.findBy(getCartIdOfCurrentUser());
     }
 
-    public OrderDto confirm(CartConfirmationDto cartConfirmationDto) {
+    @PutMapping
+    public OrderDto confirm(@RequestBody CartConfirmationDto cartConfirmationDto) {
+        UUID cartId = getCartIdOfCurrentUser();
+        UUID orderId = cartApplicationService.confirm(cartId, cartConfirmationDto);
+
+        return orderQueryDao.findBy(orderId);
+    }
+
+    private UUID getCartIdOfCurrentUser() {
         return null;
     }
 }
