@@ -9,4 +9,12 @@ public class CartController {
     public void addProduct() {
 
     }
+
+    public CartDto choose() {
+        return null;
+    }
+
+    public OrderDto confirm(CartConfirmationDto cartConfirmationDto) {
+        return null;
+    }
 }
